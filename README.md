@@ -15,21 +15,34 @@
 
 ## 安装与启动
 
+### Windows（详细步骤）
+
+**第 1 步 · 安装 Python（只需一次）**
+到 [python.org/downloads](https://www.python.org/downloads/) 下载安装，安装第一步**务必勾选 "Add Python to PATH"**（最常见的坑就是漏了这个；漏勾请重装或重启电脑）。
+
+**第 2 步 · 获取本项目**
+- 从 GitHub 仓库页面点 **Code → Download ZIP**，解压到任意文件夹（路径不要太深、避免奇怪字符）
+- 或直接拷贝整个项目文件夹（给同事拷贝时**先删除其中的 `.env`**，不要把自己的 API Key 一起拷出去）
+
+**第 3 步 · 第一次双击 `start.bat`**
+脚本自动完成：创建虚拟环境 → 用清华镜像安装依赖（首次约几分钟，OCR 引擎较大请耐心）→ 生成 `.env` 并自动打开记事本。
+在记事本中填入 DeepSeek API Key：`DEEPSEEK_API_KEY=sk-xxxx`，保存关闭。
+
+**第 4 步 · 再次双击 `start.bat`**
+浏览器自动打开 http://127.0.0.1:8780 ，看到「欢迎使用智研入排」引导页即成功。
+⚠️ **使用期间保持黑色命令行窗口开着**（它就是本地服务），关闭窗口即停止系统；下次使用再双击 `start.bat` 即可（数据都在，无需重新安装）。
+
 ### macOS / Linux
 
 ```bash
 ./start.sh
 ```
 
-首次运行会自动创建虚拟环境、安装依赖、生成 `.env`——把 DeepSeek API Key 填进去（`DEEPSEEK_API_KEY=sk-xxxx`）后再次运行，浏览器自动打开 http://127.0.0.1:8780
-
-### Windows
-
-双击 `start.bat`，按提示在记事本中填入 API Key，再次双击启动。
+流程与 Windows 相同：首次运行自动建环境、装依赖、生成 `.env`——填入 API Key 后再次运行，浏览器自动打开 http://127.0.0.1:8780
 
 ### 获取 DeepSeek API Key
 
-[platform.deepseek.com](https://platform.deepseek.com) 注册 → 充值少量金额 → 「API Keys」创建密钥。
+[platform.deepseek.com](https://platform.deepseek.com) 注册 → 充值少量金额 → 「API Keys」页面创建密钥。
 首次打开为引导页，从「新建项目（上传研究方案）」开始使用——该步骤及后续 AI 功能需要已配置 Key。
 
 ## 使用流程
@@ -70,8 +83,12 @@ version2/
 
 | 问题 | 解决 |
 |------|------|
-| 顶部黄条提示未配置 API Key | 检查 `.env` 中 `DEEPSEEK_API_KEY=` 是否已填，填好后重启（重新运行 start 脚本） |
+| 双击 start.bat 提示「未找到 Python」 | 重装 Python 并勾选 Add to PATH，或重启电脑让 PATH 生效 |
+| 顶部黄条提示未配置 API Key | 检查 `.env` 中 `DEEPSEEK_API_KEY=` 是否已填，填好后关闭命令行窗口、重新运行 start 脚本 |
+| 浏览器没有自动打开 | 手动访问 http://127.0.0.1:8780 （命令行窗口需保持开启） |
+| 关掉黑色窗口后页面打不开了 | 正常——那个窗口就是本地服务，再次双击 `start.bat` 即可恢复，数据不丢失 |
 | OCR 识别乱码/漏字 | 照片尽量拍正、光线充足；解析后逐字段核对原文 |
 | 方案太长提取不全 | 新建项目时用「粘贴文本」，只粘贴入排标准章节 |
-| 安装依赖很慢 | 启动脚本默认使用清华镜像源，失败时自动回退官方源 |
+| 首次安装依赖很慢 | 正常（OCR 引擎较大）；脚本默认使用清华镜像源，失败时自动回退官方源 |
+| 换电脑 / 给同事部署 | 拷贝整个项目文件夹即可（删除 `.env` 让对方填自己的 Key）；`data/` 一起拷则项目和患者记录全部带走 |
 | 想清空全部数据 | 删除 `data/` 目录后重启，回到首次使用引导页 |
